@@ -1,5 +1,4 @@
-"""
-WSGI config for www project.
+"""WSGI config for www project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

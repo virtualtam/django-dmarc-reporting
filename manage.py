@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+"""django-dmarc-reporting management script"""
 import os
 import sys
 
