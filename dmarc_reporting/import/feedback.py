@@ -25,7 +25,7 @@ def import_feedback_report(xml_report):
     i_metadata = i_feedback['report_metadata']
 
     reporter, created = Reporter.objects.get_or_create(
-        org_name=i_metadata['org_name']
+        org_name=i_metadata['org_name'],
     )
 
     if created:
@@ -49,3 +49,24 @@ def import_feedback_report(xml_report):
 
     if not created:
         raise DmarcImportError("This report has already been imported")
+
+    i_policy = i_feedback['policy_published']
+
+    domain, created = Domain.objects.get_or_create(
+        name=i_policy['domain'],
+    )
+    if created:
+        domain.save()
+
+    policy_published = PublishedFeedbackPolicy(
+        domain=domain,
+        alignment_dkim=i_policy['adkim'],
+        alignment_spf=i_policy['aspf'],
+        policy=i_policy['p'],
+        subdomain_policy=i_policy['sp'],
+        percentage=int(i_policy['pct']),
+    )
+    policy_published.save()
+
+    report.policy_published = policy_published
+    report.save()

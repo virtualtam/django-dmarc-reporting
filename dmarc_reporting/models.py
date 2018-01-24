@@ -29,13 +29,13 @@ class Domain(models.Model):
 class PublishedFeedbackPolicy(models.Model):
     """DMARC policy published for a given domain"""
 
-    NONE = 'n'
-    QUARANTINE = 'q'
-    REJECT = 'r'
+    NONE = 'none'
+    QUARANTINE = 'quarantine'
+    REJECT = 'reject'
     POLICY_CHOICES = (
-        (NONE, "none"),
-        (QUARANTINE, "quarantine"),
-        (REJECT, "reject"),
+        (NONE, NONE),
+        (QUARANTINE, QUARANTINE),
+        (REJECT, REJECT),
     )
 
     RELAXED = 'r'

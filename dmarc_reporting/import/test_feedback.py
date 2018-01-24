@@ -19,7 +19,7 @@ def report_metadata():
     email = ET.SubElement(meta, 'email')
     email.text = 'mailer@scroogle.net'
     extra = ET.SubElement(meta, 'extra_contact_info')
-    extra.text='http://scroogle.net'
+    extra.text = 'http://scroogle.net'
     rid = ET.SubElement(meta, 'report_id')
     rid.text = '1234'
     dates = ET.SubElement(meta, 'date_range')
@@ -31,12 +31,33 @@ def report_metadata():
 
 
 @pytest.fixture
-def feedback_report(report_metadata):
+def published_policy():
+    """Published domain policy"""
+    policy = ET.Element('policy_published')
+    domain = ET.SubElement(policy, 'domain')
+    domain.text = 'domain.tld'
+    adkim = ET.SubElement(policy, 'adkim')
+    adkim.text = 'r'
+    aspf = ET.SubElement(policy, 'aspf')
+    aspf.text = 'r'
+    pol = ET.SubElement(policy, 'p')
+    pol.text = 'none'
+    sub_pol = ET.SubElement(policy, 'sp')
+    sub_pol.text = 'none'
+    pct = ET.SubElement(policy, 'pct')
+    pct.text = '100'
+    return policy
+
+
+@pytest.fixture
+def feedback_report(report_metadata, published_policy):
     """Dummy aggregated feedbak report"""
     meta = report_metadata
+    policy = published_policy
 
     feedback = ET.Element('feedback')
     feedback.append(meta)
+    feedback.append(policy)
 
     return feedback
 
@@ -52,6 +73,22 @@ def test_import_single_report(feedback_report):
     assert reporter.org_name == 'Scroogle'
     assert reporter.email == 'mailer@scroogle.net'
     assert reporter.extra_contact_info == 'http://scroogle.net'
+
+    domain = Domain.objects.get(pk=1)
+    assert domain.name == 'domain.tld'
+
+    policy_published = PublishedFeedbackPolicy.objects.get(pk=1)
+    assert policy_published.domain == domain
+    assert policy_published.alignment_dkim == 'r'
+    assert policy_published.alignment_spf == 'r'
+    assert policy_published.policy == 'none'
+    assert policy_published.subdomain_policy == 'none'
+    assert policy_published.percentage == 100
+
+    report = FeedbackReport.objects.get(pk=1)
+    assert report.reporter == reporter
+    assert report.report_id == '1234'
+    assert report.policy_published == policy_published
 
 
 @pytest.mark.django_db
