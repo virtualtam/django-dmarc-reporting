@@ -1,11 +1,15 @@
 """django-dmarc-reporting models"""
+# pylint: disable=too-few-public-methods
 from django.db import models
 
 
 class Reporter(models.Model):
     """DMARC report issuer"""
 
-    org_name = models.CharField(max_length=50)
+    org_name = models.CharField(
+        max_length=50,
+        unique=True,
+    )
     email = models.EmailField()
     extra_contact_info = models.CharField(
         max_length=254,
@@ -16,7 +20,10 @@ class Reporter(models.Model):
 class Domain(models.Model):
     """Internet Domain Name"""
 
-    name = models.CharField(max_length=254)
+    name = models.CharField(
+        max_length=254,
+        unique=True,
+    )
 
 
 class PublishedFeedbackPolicy(models.Model):
@@ -80,6 +87,11 @@ class FeedbackReport(models.Model):
         on_delete=models.CASCADE,
         null=True,
     )
+
+    class Meta():
+        """FeedbackReport model metadata"""
+
+        unique_together = (('reporter', 'report_id'),)
 
 
 class FeedbackReportRecord(models.Model):
