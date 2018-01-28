@@ -87,6 +87,11 @@ class PublishedFeedbackPolicy(models.Model):
             self.percentage,
         )
 
+    class Meta():
+        """Model metadata"""
+
+        verbose_name_plural = "Published feedback policies"
+
 
 class FeedbackReport(models.Model):
     """DMARC aggregated feedback report"""
@@ -159,6 +164,11 @@ class EvaluatedFeedbackPolicy(models.Model):
             self.dkim_pass,
             self.spf_pass,
         )
+
+    class Meta():
+        """Model metadata"""
+
+        verbose_name_plural = "Evaluated feedback policies"
 
 
 class AuthenticationResult(models.Model):
