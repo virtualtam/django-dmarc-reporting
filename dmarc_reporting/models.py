@@ -16,6 +16,9 @@ class Reporter(models.Model):
         blank=True
     )
 
+    def __str__(self):
+        return self.org_name
+
 
 class Domain(models.Model):
     """Internet Domain Name"""
@@ -24,6 +27,9 @@ class Domain(models.Model):
         max_length=254,
         unique=True,
     )
+
+    def __str__(self):
+        return self.name
 
 
 class PublishedFeedbackPolicy(models.Model):
@@ -71,6 +77,16 @@ class PublishedFeedbackPolicy(models.Model):
     )
     percentage = models.IntegerField(default=100)
 
+    def __str__(self):
+        return "%s - (adkim=%s, aspf=%s, p=%s, sp=%s, pct=%d)" % (
+            self.domain,
+            self.alignment_dkim,
+            self.alignment_spf,
+            self.policy,
+            self.subdomain_policy,
+            self.percentage,
+        )
+
 
 class FeedbackReport(models.Model):
     """DMARC aggregated feedback report"""
@@ -87,6 +103,9 @@ class FeedbackReport(models.Model):
         on_delete=models.CASCADE,
         null=True,
     )
+
+    def __str__(self):
+        return "%s - %s" % (self.reporter, self.report_id)
 
     class Meta():
         """FeedbackReport model metadata"""
@@ -118,6 +137,9 @@ class FeedbackReportRecord(models.Model):
         null=True,
     )
 
+    def __str__(self):
+        return "%s - %s" % (self.report, self.source_ip)
+
 
 class EvaluatedFeedbackPolicy(models.Model):
     """Evaluated DMARC policy"""
@@ -129,6 +151,14 @@ class EvaluatedFeedbackPolicy(models.Model):
     disposition = models.CharField(max_length=20)
     dkim_pass = models.BooleanField()
     spf_pass = models.BooleanField()
+
+    def __str__(self):
+        return "%s - (disposition=%s, dkim=%s, spf=%s)" % (
+            self.record,
+            self.disposition,
+            self.dkim_pass,
+            self.spf_pass,
+        )
 
 
 class AuthenticationResult(models.Model):
@@ -170,3 +200,24 @@ class AuthenticationResult(models.Model):
     )
     selector = models.CharField(max_length=20)
     scope = models.CharField(max_length=20)
+
+    def __str__(self):
+        if self.selector:
+            return "%s - (%s=%s, selector=%s)" % (
+                self.domain,
+                self.result_type,
+                self.result,
+                self.selector
+            )
+        if self.scope:
+            return "%s - (%s=%s, scope=%s)" % (
+                self.domain,
+                self.result_type,
+                self.result,
+                self.scope
+            )
+        return "%s - (%s=%s)" % (
+            self.domain,
+            self.result_type,
+            self.result,
+        )
