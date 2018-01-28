@@ -103,7 +103,7 @@ class FeedbackReportRecord(models.Model):
     )
     source_ip = models.GenericIPAddressField()
     count = models.PositiveIntegerField()
-    headers_from = models.ForeignKey(
+    header_from = models.ForeignKey(
         'Domain',
         on_delete=models.CASCADE,
         related_name='+',
@@ -154,7 +154,7 @@ class AuthenticationResult(models.Model):
         Domain,
         on_delete=models.CASCADE,
     )
-    record = models.OneToOneField(
+    record = models.ForeignKey(
         FeedbackReportRecord,
         on_delete=models.CASCADE,
     )

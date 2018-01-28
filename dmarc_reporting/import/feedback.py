@@ -70,3 +70,60 @@ def import_feedback_report(xml_report):
 
     report.policy_published = policy_published
     report.save()
+
+    if isinstance(i_feedback['record'], list):
+        for i_record in i_feedback['record']:
+            import_feedback_report_record(report, i_record)
+    else:
+        import_feedback_report_record(report, i_feedback['record'])
+
+
+def import_feedback_report_record(report, record_dict):
+    """Import a feedback report record"""
+    header_from, created = Domain.objects.get_or_create(
+        name=record_dict['identifiers']['header_from'],
+    )
+    if created:
+        header_from.save()
+
+    envelope_from, created = Domain.objects.get_or_create(
+        name=record_dict['identifiers']['envelope_from'],
+    )
+    if created:
+        envelope_from.save()
+
+    i_row = record_dict['row']
+    record = FeedbackReportRecord(
+        report=report,
+        source_ip=i_row['source_ip'],
+        count=int(i_row['count']),
+        header_from=header_from,
+        envelope_from=envelope_from,
+    )
+    record.save()
+
+    i_policy = i_row['policy_evaluated']
+    policy = EvaluatedFeedbackPolicy(
+        record=record,
+        disposition=i_policy['disposition'],
+        dkim_pass=True if i_policy['dkim'] == 'pass' else False,
+        spf_pass=True if i_policy['spf'] == 'pass' else False,
+    )
+    policy.save()
+
+    for result_type, result in record_dict['auth_results'].items():
+        domain, created = Domain.objects.get_or_create(
+            name=result['domain'],
+        )
+        if created:
+            domain.save()
+
+        auth_result = AuthenticationResult(
+            domain=domain,
+            record=record,
+            result_type=result_type,
+            result=result['result'],
+            scope=result.get('scope', ''),
+            selector=result.get('selector', ''),
+        )
+        auth_result.save()
