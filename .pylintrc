@@ -351,6 +351,7 @@ good-names=i,
            _,
            app_name,
            application,
+           default_app_config,
            urlpatterns
 
 # Include a hint for the correct naming format with invalid-name

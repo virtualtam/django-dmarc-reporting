@@ -6,3 +6,4 @@ class DmarcReportingConfig(AppConfig):
     """Application configuration"""
 
     name = 'dmarc_reporting'
+    verbose_name = "DMARC reporting"
