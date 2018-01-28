@@ -35,6 +35,7 @@ setup(
     packages=find_packages(exclude=['tests.*', 'tests']),
     install_requires=[
         'django>=2.0,<2.1',
+        'xmltodict>=0.11,<0.12',
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',
