@@ -7,14 +7,8 @@ Welcome to django-dmarc-reporting's documentation!
 ==================================================
 
 .. toctree::
+   :glob:
    :maxdepth: 2
-   :caption: Contents:
 
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   developer
+   about_dmarc
