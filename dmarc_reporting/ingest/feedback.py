@@ -29,8 +29,8 @@ def import_feedback_report(xml_report):
     )
 
     if created:
-        reporter.email = i_metadata['email']
-        reporter.extra_contact_info = i_metadata['extra_contact_info']
+        reporter.email = i_metadata.get('email', '')
+        reporter.extra_contact_info = i_metadata.get('extra_contact_info', '')
         reporter.save()
 
     date_begin = datetime.utcfromtimestamp(
@@ -58,12 +58,16 @@ def import_feedback_report(xml_report):
     if created:
         domain.save()
 
+    subdomain_policy = i_policy.get('sp', PublishedFeedbackPolicy.NONE)
+    if not subdomain_policy:
+        subdomain_policy = PublishedFeedbackPolicy.NONE
+
     policy_published = PublishedFeedbackPolicy(
         domain=domain,
         alignment_dkim=i_policy['adkim'],
         alignment_spf=i_policy['aspf'],
         policy=i_policy['p'],
-        subdomain_policy=i_policy['sp'],
+        subdomain_policy=subdomain_policy,
         percentage=int(i_policy['pct']),
     )
     policy_published.save()
@@ -86,11 +90,14 @@ def import_feedback_report_record(report, record_dict):
     if created:
         header_from.save()
 
-    envelope_from, created = Domain.objects.get_or_create(
-        name=record_dict['identifiers']['envelope_from'],
-    )
-    if created:
-        envelope_from.save()
+    try:
+        envelope_from, created = Domain.objects.get_or_create(
+            name=record_dict['identifiers']['envelope_from'],
+        )
+        if created:
+            envelope_from.save()
+    except KeyError:
+        envelope_from = None
 
     i_row = record_dict['row']
     record = FeedbackReportRecord(
@@ -111,19 +118,28 @@ def import_feedback_report_record(report, record_dict):
     )
     policy.save()
 
-    for result_type, result in record_dict['auth_results'].items():
-        domain, created = Domain.objects.get_or_create(
-            name=result['domain'],
-        )
-        if created:
-            domain.save()
+    for result_type, results in record_dict['auth_results'].items():
+        if isinstance(results, list):
+            for result in results:
+                import_feedback_record_result(record, result_type, result)
+        else:
+            import_feedback_record_result(record, result_type, results)
 
-        auth_result = AuthenticationResult(
-            domain=domain,
-            record=record,
-            result_type=result_type,
-            result=result['result'],
-            scope=result.get('scope', ''),
-            selector=result.get('selector', ''),
-        )
-        auth_result.save()
+
+def import_feedback_record_result(record, result_type, result):
+    """Import a feedback report record authentication result"""
+    domain, created = Domain.objects.get_or_create(
+        name=result['domain'],
+    )
+    if created:
+        domain.save()
+
+    auth_result = AuthenticationResult(
+        domain=domain,
+        record=record,
+        result_type=result_type,
+        result=result['result'],
+        scope=result.get('scope', ''),
+        selector=result.get('selector', ''),
+    )
+    auth_result.save()
