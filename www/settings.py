@@ -118,3 +118,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Page displayed after a successful login
+# https://docs.djangoproject.com/en/2.0/ref/settings/#std:setting-LOGIN_REDIRECT_URL
+LOGIN_REDIRECT_URL = '/dmarc/'
+
+# Login page
+# https://docs.djangoproject.com/en/2.0/ref/settings/#login-url
+LOGIN_URL = '/dmarc/login/'
+
+# Page displayed after logging out
+# https://docs.djangoproject.com/en/2.0/ref/settings/#logout-redirect-url
+LOGOUT_REDIRECT_URL = LOGIN_URL
