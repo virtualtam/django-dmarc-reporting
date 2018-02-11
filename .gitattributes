@@ -1,0 +1,32 @@
+# Set default behavior
+*       text=auto eol=lf
+
+# Ensure sources are processed
+*.conf  text
+*.css   text
+*.html  text diff=html
+*.js    text
+*.md    text
+Dockerfile      text
+
+# Do not alter images nor minified scripts nor fonts
+*.ico           binary
+*.jpg           binary
+*.png           binary
+*.svg           binary
+*.otf           binary
+*.eot           binary
+*.woff          binary
+*.woff2         binary
+*.ttf           binary
+*.lock          binary
+*.min.css       binary
+*.min.js        binary
+*.mo            binary
+
+# Exclude from Git archives
+.editorconfig   export-ignore
+.gitattributes  export-ignore
+.gitignore      export-ignore
+.travis.yml     export-ignore
+docker/         export-ignore
