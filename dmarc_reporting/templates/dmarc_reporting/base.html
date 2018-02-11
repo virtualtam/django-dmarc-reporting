@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% block title %}{% endblock %} - DMARC</title>
+    <meta charset="UTF-8">
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+      />
+    <link rel="stylesheet" type="text/css" href="{% static 'dmarc_reporting/application.css' %}">
+  </head>
+  <body>
+{% include 'dmarc_reporting/navbar.html' %}
+    <div id="content">
+{% block content %}{% endblock %}
+    </div>
+  </body>
+</html>
