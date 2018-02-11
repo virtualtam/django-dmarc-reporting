@@ -5,9 +5,8 @@ from xml.parsers.expat import ExpatError
 import xmltodict
 from django.utils import timezone
 
-from ..models import (AuthenticationResult, Domain, EvaluatedFeedbackPolicy,
-                      FeedbackReport, FeedbackReportRecord,
-                      PublishedFeedbackPolicy, Reporter)
+from ..models import (AuthenticationResult, Domain, EvaluatedFeedbackPolicy, FeedbackReport,
+                      FeedbackReportRecord, PublishedFeedbackPolicy, Reporter)
 
 
 class DmarcImportError(BaseException):

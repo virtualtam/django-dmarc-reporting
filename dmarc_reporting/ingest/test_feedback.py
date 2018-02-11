@@ -4,9 +4,8 @@ import xml.etree.ElementTree as ET
 
 import pytest
 
-from ..models import (AuthenticationResult, Domain, EvaluatedFeedbackPolicy,
-                      FeedbackReport, FeedbackReportRecord,
-                      PublishedFeedbackPolicy, Reporter)
+from ..models import (AuthenticationResult, Domain, EvaluatedFeedbackPolicy, FeedbackReport,
+                      FeedbackReportRecord, PublishedFeedbackPolicy, Reporter)
 from .feedback import DmarcImportError, import_feedback_report
 
 

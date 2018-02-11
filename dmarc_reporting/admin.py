@@ -1,9 +1,8 @@
 """django-dmarc-reporting administration settings"""
 from django.contrib import admin
 
-from .models import (AuthenticationResult, Domain, EvaluatedFeedbackPolicy,
-                     FeedbackReport, FeedbackReportRecord,
-                     PublishedFeedbackPolicy, Reporter)
+from .models import (AuthenticationResult, Domain, EvaluatedFeedbackPolicy, FeedbackReport,
+                     FeedbackReportRecord, PublishedFeedbackPolicy, Reporter)
 
 admin.site.register(AuthenticationResult)
 admin.site.register(Domain)
