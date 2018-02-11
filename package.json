@@ -1,0 +1,9 @@
+{
+  "name": "django-dmarc-reporting",
+  "version": "0.1",
+  "description": "Automated DMARC report processing",
+  "main": "index.js",
+  "repository": "https://github.com/virtualtam/django-dmarc-reporting",
+  "author": "VirtualTam <virtualtam@flibidi.net>",
+  "license": "BSD-3-Clause"
+}
