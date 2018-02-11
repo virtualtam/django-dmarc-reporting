@@ -2,6 +2,9 @@
 *~
 *.swp
 
+# frontend
+node_modules/
+
 # python
 *.pyc
 __pycache__

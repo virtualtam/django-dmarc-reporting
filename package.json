@@ -5,5 +5,15 @@
   "main": "index.js",
   "repository": "https://github.com/virtualtam/django-dmarc-reporting",
   "author": "VirtualTam <virtualtam@flibidi.net>",
-  "license": "BSD-3-Clause"
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "bootstrap": "4.0.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-sass": "^3.1.0"
+  },
+  "scripts": {
+    "build": "gulp"
+  }
 }
