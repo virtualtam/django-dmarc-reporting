@@ -1,0 +1,48 @@
+{% extends 'dmarc_reporting/base.html' %}
+
+{% block title %}Reports for {{ domain.name }}{% endblock %}
+{% block content %}
+<div class="container">
+  <h1>Aggregated feedback reports for {{ domain.name }}</h1>
+{% if not reports %}
+  <p>No feedback report found for this domain</p>
+{% else %}
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>Coverage</th>
+        <th>Reporter</th>
+        <th>ID</th>
+        <th>adkim</th>
+        <th>aspf</th>
+        <th>p</th>
+        <th>sp</th>
+        <th>pct</th>
+        <th>Records</th>
+      </tr>
+    </thead>
+    <tbody>
+{% for report in reports %}
+    <tr>
+      <td>{{ report.date_begin | date }} - {{ report.date_end | date }}</td>
+      <td>{{ report.reporter }}</td>
+      <td>{{ report.report_id }}</td>
+      <td>{{ report.policy_published.alignment_dkim }}</td>
+      <td>{{ report.policy_published.alignment_spf }}</td>
+      <td>{{ report.policy_published.policy }}</td>
+      <td>{{ report.policy_published.subdomain_policy }}</td>
+      <td>{{ report.policy_published.percentage }}</td>
+      <td>
+        {% if not report.feedbackreportrecord_set %}
+        No record found
+        {% else %}
+        {# TODO #}
+        {% endif %}
+      </td>
+    </tr>
+{% endfor %}
+    </tbody>
+  </table>
+{% endif %}
+</div>
+{% endblock %}

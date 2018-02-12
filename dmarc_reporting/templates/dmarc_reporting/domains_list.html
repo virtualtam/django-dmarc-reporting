@@ -10,14 +10,18 @@
     <thead>
       <tr>
         <th>Domain</th>
-        <th>Reports</th>
+        <th>Feedback reports</th>
       </tr>
     </thead>
     <tbody>
 {% for domain in domains %}
     <tr>
       <th>{{ domain.name }}</th>
-      <th>{{ domain.num_reports }}</th>
+      <th>
+        <a href="{% url 'dmarc_reporting:feedback_reports' domain.pk %}">
+          {{ domain.num_reports }}
+        </a>
+      </th>
     </tr>
 {% endfor %}
     </tbody>
