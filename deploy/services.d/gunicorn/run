@@ -1,0 +1,2 @@
+#!/bin/execlineb -P
+gunicorn -c /app/deploy/gunicorn.py www.wsgi:application
