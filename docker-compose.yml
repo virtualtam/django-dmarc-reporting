@@ -1,0 +1,16 @@
+---
+# django-dmarc-reporting
+version: "3"
+
+services:
+  dmarc:
+    build: .
+    environment:
+      SQLITE_DATABASE: /var/lib/app/db/dmarc.sqlite3
+    ports:
+      - 9080:80
+    volumes:
+      - db-data:/var/lib/app/db
+
+volumes:
+  db-data:
