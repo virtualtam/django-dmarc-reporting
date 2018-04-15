@@ -1,5 +1,5 @@
 #!/bin/sh
-su app -c 'python3 /app/manage.py collectstatic'
+su app -c 'python3 /app/manage.py collectstatic --no-input'
 su app -c 'python3 /app/manage.py migrate'
 
 busybox tail -F \
