@@ -3,12 +3,13 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to django-dmarc-reporting's documentation!
-==================================================
+django-dmarc-reporting documentation
+====================================
 
 .. toctree::
    :glob:
    :maxdepth: 2
 
    developer
+   docker
    about_dmarc
