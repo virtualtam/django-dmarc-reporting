@@ -112,8 +112,8 @@ def import_feedback_report_record(report, record_dict):
     policy = EvaluatedFeedbackPolicy(
         record=record,
         disposition=i_policy['disposition'],
-        dkim_pass=True if i_policy['dkim'] == 'pass' else False,
-        spf_pass=True if i_policy['spf'] == 'pass' else False,
+        dkim_pass=i_policy['dkim'] == 'pass',
+        spf_pass=i_policy['spf'] == 'pass',
     )
     policy.save()
 

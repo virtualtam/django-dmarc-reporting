@@ -84,7 +84,7 @@ class PublishedFeedbackPolicy(models.Model):
             self.alignment_spf,
             self.policy,
             self.subdomain_policy,
-            self.percentage,
+            int(self.percentage),
         )
 
     class Meta():
