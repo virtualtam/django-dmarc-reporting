@@ -8,5 +8,5 @@ app_name = 'dmarc_reporting'
 urlpatterns = [
     path('', views.domains_list, name='domains_list'),
     path('login/', auth_views.LoginView.as_view(template_name='dmarc_reporting/login.html'), name='login'),
-    path('logout/', auth_views.logout, {'next_page': 'dmarc_reporting:login'}, name='logout'),
+    path('logout/', auth_views.LogoutView.as_view(), {'next_page': 'dmarc_reporting:login'}, name='logout'),
 ]

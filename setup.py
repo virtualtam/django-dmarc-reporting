@@ -34,7 +34,7 @@ setup(
     keywords="django dmarc mail report",
     packages=find_packages(exclude=['tests.*', 'tests']),
     install_requires=[
-        'django>=2.0,<2.1',
+        'django>=2.1,<2.2',
         'xmltodict>=0.11,<0.12',
     ],
     classifiers=[
