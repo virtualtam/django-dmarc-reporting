@@ -204,7 +204,7 @@ class AuthenticationResult(models.Model):
         default=DKIM,
     )
     result = models.CharField(
-        max_length=4,
+        max_length=8,
         choices=RESULT_CHOICE,
         default=FAIL,
     )

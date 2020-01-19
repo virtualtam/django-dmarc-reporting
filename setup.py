@@ -34,7 +34,7 @@ setup(
     keywords="django dmarc mail report",
     packages=find_packages(exclude=['tests.*', 'tests']),
     install_requires=[
-        'django>=2.2,<2.3',
+        'django>=3.0,<3.1',
         'xmltodict>=0.11,<0.12',
     ],
     classifiers=[
@@ -46,6 +46,7 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
         'Topic :: Internet :: WWW/HTTP',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
         'Topic :: Internet :: WWW/HTTP :: WSGI',

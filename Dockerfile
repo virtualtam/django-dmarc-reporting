@@ -1,5 +1,5 @@
 # Stage 1: frontend
-FROM node:9.9-alpine as node
+FROM node:12.4-alpine as node
 ADD . /app
 WORKDIR /app
 RUN yarn install \
@@ -7,7 +7,7 @@ RUN yarn install \
     && rm -rf node_modules
 
 # Stage 2: final image
-FROM alpine:3.7
+FROM alpine:3.11
 LABEL maintainer="VirtualTam"
 
 RUN apk --update --no-cache add \
